@@ -4,7 +4,7 @@ from django.contrib.postgres.fields import ArrayField, JSONField
 from utils.helpers import generate_random_string
 
 
-class Logs(models.Model):
+class LogsModel(models.Model):
     log_id = models.TextField(max_length=32, default=generate_random_string())
     api_key = models.TextField(max_length=32)
     log_message = models.TextField(max_length=2048)

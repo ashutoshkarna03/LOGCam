@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from .models import Logs
+from .models import LogsModel
 
 
 class LogsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Logs
+        model = LogsModel
         fields = '__all__'
 
 

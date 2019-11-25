@@ -29,19 +29,19 @@ def record_logs(request):
     return Response(logs_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# @api_view(['POST'])
-# def get_logs(request):
-#     api_key = request.data['api_key']
-#     logs_serializer = LogsSerializer(data=request.data)
-#     if logs_serializer.is_valid():
-#         data = logs_serializer.get_value()
-#         print(type(data))
-#         return Response({
-#             'success': True,
-#             'data': data
-#         },
-#             status=status.HTTP_201_CREATED)
-#     return Response(logs_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+@api_view(['POST'])
+def get_logs(request):
+    # api_key = request.data['api_key']
+    logs_serializer = LogsSerializer(data=request.data)
+    if logs_serializer.is_valid():
+        log_data = LogsModel.objects.all()
+        serializer = LogsSerializer(log_data, many=True)
+        return Response({
+            'success': True,
+            'data': serializer.data
+        },
+            status=status.HTTP_201_CREATED)
+    return Response(logs_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
