@@ -31,17 +31,19 @@ def record_logs(request):
 
 @api_view(['POST'])
 def get_logs(request):
-    # api_key = request.data['api_key']
-    logs_serializer = LogsSerializer(data=request.data)
-    if logs_serializer.is_valid():
-        log_data = LogsModel.objects.all()
-        serializer = LogsSerializer(log_data, many=True)
-        return Response({
-            'success': True,
-            'data': serializer.data
-        },
-            status=status.HTTP_201_CREATED)
-    return Response(logs_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    api_key = request.data['api_key']
+    # logs_serializer = LogsSerializer(data=request.data)
+    # if logs_serializer.is_valid():
+    log_data = LogsModel.objects.filter(api_key=api_key).all()
+    print(log_data)
+    print(type(log_data))
+    serializer = LogsSerializer(log_data, many=True)
+    return Response({
+        'success': True,
+        'data': serializer.data
+    },
+        status=status.HTTP_201_CREATED)
+    # return Response(logs_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
