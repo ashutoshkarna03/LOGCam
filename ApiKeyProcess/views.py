@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import ApiKeyModel
 from .serializer import ApiKeySerializer
+from .validation import validate_api_key_if_exists
 
 
 @api_view(['GET'])
@@ -13,7 +14,7 @@ def index(request):
     )
 
 
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'PUT'])
 def get_new_api_key(request):
     # get all the api keys
     if request.method == 'GET':
@@ -26,7 +27,7 @@ def get_new_api_key(request):
             status=status.HTTP_201_CREATED)
 
     # generate api key and return it
-    elif request.method == 'POST':
+    elif request.method == 'PUT':
         api_key_serializer = ApiKeySerializer(data={})
         if api_key_serializer.is_valid():
             api_key_serializer.save()
@@ -37,3 +38,30 @@ def get_new_api_key(request):
             },
                 status=status.HTTP_201_CREATED)
         return Response(api_key_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def update_api_key_status(request):
+    api_key_to_update = request.data['api_key']
+    new_status_value = request.data['new_status']
+
+    # validate if new_status_value is Boolean or not
+    if type(new_status_value) is not bool:
+        return Response({
+            "success": False,
+            "message": "new_status should be Boolean type"
+        }, status=status.HTTP_400_BAD_REQUEST)
+
+    # validate api_key provided in request
+    if not validate_api_key_if_exists(api_key_to_update):
+        return Response({
+            "success": False,
+            "message": "api_key is not valid or does not exist"
+        }, status=status.HTTP_400_BAD_REQUEST)
+
+    # update the status (is_active) with the new value
+    ApiKeyModel.objects.filter(api_key=api_key_to_update).update(is_active=new_status_value)
+    return Response({
+        "success": True,
+        "message": "status updated"
+    }, status=status.HTTP_201_CREATED)

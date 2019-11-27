@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from RecordLog.views import index, record_logs, get_logs
-from ApiKeyProcess.views import get_new_api_key
+from ApiKeyProcess.views import get_new_api_key, update_api_key_status
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,4 +24,5 @@ urlpatterns = [
     path('record-logs', record_logs, name='record the logs'),
     path('get-logs', get_logs, name='get the logs'),
     path('get-api-key', get_new_api_key, name='get the new api key'),
+    path('update-api-key-status', update_api_key_status, name='update the is_active status of apikey'),
 ]

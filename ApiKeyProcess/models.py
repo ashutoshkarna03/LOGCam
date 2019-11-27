@@ -15,3 +15,11 @@ class ApiKeyModel(models.Model):
         verbose_name = 'table to save api keys'
         db_table = 'api_keys'
 
+
+def get_status_of_api_key(api_key):
+    """
+    check if the status (is_active) is true or false
+    :param api_key: api_key value to be checked
+    :return: status of given api_key (returns boolean)
+    """
+    return True
