@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from RecordLog.views import index, record_logs, get_logs, get_new_api_key
+from RecordLog.views import index, record_logs, get_logs
+from ApiKeyProcess.views import get_new_api_key
 
 urlpatterns = [
     path('admin/', admin.site.urls),

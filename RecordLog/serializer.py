@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import LogsModel, ApiKeyModel
+from .models import LogsModel
 
 
 class LogsSerializer(serializers.ModelSerializer):
@@ -15,12 +15,4 @@ class LogsSerializer(serializers.ModelSerializer):
             'recorded_on'
         )
 
-
-class ApiKeySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ApiKeyModel
-        # fields = '__all__'
-        fields = (
-            'api_key',
-        )
 

@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'RecordLog.apps.RecordlogConfig'
+    'RecordLog.apps.RecordlogConfig',
+    'ApiKeyProcess.apps.ApikeyprocessConfig',
 ]
 
 MIDDLEWARE = [
@@ -82,7 +83,7 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'LOGCam',
+        'NAME': 'LOGCamDb',
         'USER': 'postgres',
         'PASSWORD': 'helloworld1!',
         'HOST': '34.230.30.158',
